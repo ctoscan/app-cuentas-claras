@@ -1,4 +1,4 @@
-const CACHE_NAME = "cuentas-claras-v1";
+const CACHE_NAME = "cuentas-claras-v2";
 
 const urlsToCache = [
   "./",
@@ -23,3 +23,4 @@ self.addEventListener("fetch", event => {
       .then(response => response || fetch(event.request))
   );
 });
+
