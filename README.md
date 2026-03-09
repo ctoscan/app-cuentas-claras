@@ -4,6 +4,12 @@ Puedes usar la app directamente aquí:
 
 https://ctoscan.github.io/app-cuentas-claras/
 
+## 📦 Descargar versión
+
+Puedes descargar la primera versión desde aquí:
+
+https://github.com/ctoscan/app-cuentas-claras/releases
+
 # APP Cuentas Claras
 
 APP Cuentas Claras es una aplicación web progresiva (PWA) diseñada para registrar gastos diarios de forma simple y rápida.
