@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>APP Cuentas Claras</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- Manifest PWA -->
+<link rel="manifest" href="manifest.json">
+
+</head>
+
+<body>
+
+<header>
+<h1>💰 Cuentas Claras</h1>
+<p>Control simple de gastos diarios</p>
+</header>
+
+
+<section class="formulario">
+
+<h2>Registrar gasto</h2>
+
+<input type="number" id="monto" placeholder="Monto $" />
+
+<select id="categoria">
+
+<option value="">Seleccionar categoría</option>
+<option value="Carnicería">Carnicería</option>
+<option value="Verdulería">Verdulería</option>
+<option value="Supermercado">Supermercado</option>
+<option value="PedidosYa">PedidosYa</option>
+<option value="Transporte">Transporte</option>
+<option value="Otros">Otros</option>
+
+</select>
+
+<button id="guardar">Guardar gasto</button>
+
+</section>
+
+
+<section class="resumen">
+
+<h2>Total del mes</h2>
+
+<div id="total">$0</div>
+
+</section>
+
+
+<section class="lista">
+
+<h2>Gastos registrados</h2>
+
+<ul id="lista-gastos">
+
+</ul>
+
+</section>
+
+
+<section class="grafico">
+
+<h2>Gastos por categoría</h2>
+
+<canvas id="graficoGastos"></canvas>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="app.js"></script>
+
+<script>
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+  .then(() => console.log("Service Worker registrado"));
+}
+
+</script>
+
+</body>
+</html>
