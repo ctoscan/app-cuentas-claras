@@ -1,158 +1,101 @@
-// ================================
-// APP CUENTAS CLARAS
-// ================================
-
-
-// ELEMENTOS DEL HTML
-
-const montoInput = document.getElementById("monto");
-const categoriaSelect = document.getElementById("categoria");
-const botonGuardar = document.getElementById("guardar");
-
-const listaGastos = document.getElementById("lista-gastos");
-const totalElemento = document.getElementById("total");
-
-
-// ================================
-// CARGAR GASTOS GUARDADOS
-// ================================
-
 let gastos = JSON.parse(localStorage.getItem("gastos")) || [];
 
+const montoInput = document.getElementById("monto");
+const categoriaInput = document.getElementById("categoria");
+const botonGuardar = document.getElementById("guardar");
 
-// ================================
-// GUARDAR GASTO
-// ================================
+const lista = document.getElementById("lista-gastos");
+const totalElemento = document.getElementById("total");
 
-botonGuardar.addEventListener("click", () => {
+botonGuardar.addEventListener("click", agregarGasto);
 
-const monto = parseFloat(montoInput.value);
-const categoria = categoriaSelect.value;
+function agregarGasto(){
 
-if (!monto || !categoria) {
+  const monto = parseFloat(montoInput.value);
+  const categoria = categoriaInput.value;
 
-alert("Completa monto y categoría");
-return;
+  if(!monto || !categoria){
+    alert("Completar monto y categoría");
+    return;
+  }
 
-}
+  const gasto = {
+    monto,
+    categoria
+  };
 
-const gasto = {
+  gastos.push(gasto);
 
-fecha: new Date().toLocaleDateString(),
-categoria: categoria,
-monto: monto
+  guardarDatos();
+  actualizarUI();
 
-};
-
-gastos.push(gasto);
-
-localStorage.setItem("gastos", JSON.stringify(gastos));
-
-montoInput.value = "";
-categoriaSelect.value = "";
-
-mostrarGastos();
-calcularTotal();
-actualizarGrafico();
-
-});
-
-
-// ================================
-// MOSTRAR GASTOS
-// ================================
-
-function mostrarGastos() {
-
-listaGastos.innerHTML = "";
-
-gastos.forEach(gasto => {
-
-const li = document.createElement("li");
-
-li.innerHTML = `
-<span>${gasto.categoria}</span>
-<span>$${gasto.monto}</span>
-`;
-
-listaGastos.appendChild(li);
-
-});
+  montoInput.value = "";
+  categoriaInput.value = "";
 
 }
 
-
-// ================================
-// CALCULAR TOTAL
-// ================================
-
-function calcularTotal() {
-
-let total = 0;
-
-gastos.forEach(gasto => {
-
-total += gasto.monto;
-
-});
-
-totalElemento.textContent = "$" + total;
-
+function guardarDatos(){
+  localStorage.setItem("gastos", JSON.stringify(gastos));
 }
 
+function actualizarUI(){
 
-// ================================
-// GRAFICO DE GASTOS
-// ================================
+  lista.innerHTML = "";
+
+  let total = 0;
+
+  gastos.forEach(gasto => {
+
+    total += gasto.monto;
+
+    const li = document.createElement("li");
+    li.textContent = `${gasto.categoria} - $${gasto.monto}`;
+
+    lista.appendChild(li);
+
+  });
+
+  totalElemento.textContent = "$" + total;
+
+  actualizarGrafico();
+
+}
 
 let grafico;
 
-function actualizarGrafico() {
+function actualizarGrafico(){
 
-const categorias = {};
+  const categorias = {};
+  
+  gastos.forEach(g => {
 
-gastos.forEach(gasto => {
+    if(!categorias[g.categoria]){
+      categorias[g.categoria] = 0;
+    }
 
-if (!categorias[gasto.categoria]) {
-categorias[gasto.categoria] = 0;
-}
+    categorias[g.categoria] += g.monto;
 
-categorias[gasto.categoria] += gasto.monto;
+  });
 
-});
+  const labels = Object.keys(categorias);
+  const data = Object.values(categorias);
 
-const labels = Object.keys(categorias);
-const data = Object.values(categorias);
+  const ctx = document.getElementById("graficoGastos").getContext("2d");
 
-const ctx = document.getElementById("graficoGastos");
+  if(grafico){
+    grafico.destroy();
+  }
 
-if (grafico) {
-grafico.destroy();
-}
-
-grafico = new Chart(ctx, {
-
-type: "pie",
-
-data: {
-
-labels: labels,
-
-datasets: [{
-data: data
-}]
+  grafico = new Chart(ctx,{
+    type:'pie',
+    data:{
+      labels:labels,
+      datasets:[{
+        data:data
+      }]
+    }
+  });
 
 }
 
-});
-
-}
-
-
-// ================================
-// INICIAR APP
-// ================================
-
-mostrarGastos();
-calcularTotal();
-actualizarGrafico();
+actualizarUI();
