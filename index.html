@@ -3,176 +3,131 @@
 
 <head>
 
-<!-- ============================= -->
-<!-- CONFIGURACIÓN GENERAL -->
-<!-- ============================= -->
+<!-- =====================================================
+CONFIGURACIÓN GENERAL
+===================================================== -->
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>APP Cuentas Claras</title>
+<title>Cuentas Claras</title>
+
+<!-- =====================================================
+PWA CONFIG
+Permite instalar la app
+===================================================== -->
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2c3e50">
+
+<!-- =====================================================
+ESTILOS
+===================================================== -->
 
 <link rel="stylesheet" href="styles.css">
 
-<!-- ============================= -->
-<!-- CONFIGURACIÓN PWA -->
-<!-- ============================= -->
+<!-- =====================================================
+CHART.JS
+===================================================== -->
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2c7be5">
-
-<!-- Iconos -->
-<link rel="icon" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
-
 <body>
 
-<!-- ============================= -->
-<!-- HEADER -->
-<!-- ============================= -->
+
+<!-- =====================================================
+HEADER
+===================================================== -->
 
 <header>
 
-<h1>💰 Cuentas Claras</h1>
-<p>Control simple de gastos diarios</p>
-
-<!-- BOTÓN INSTALAR APP -->
-<button id="instalarApp" style="display:none;">
-📲 Instalar App
-</button>
+<h1>Cuentas Claras</h1>
 
 </header>
 
 
-<!-- ============================= -->
-<!-- FORMULARIO DE REGISTRO -->
-<!-- ============================= -->
+<!-- =====================================================
+FORMULARIO DE MOVIMIENTOS
+===================================================== -->
 
 <section class="formulario">
 
-<h2>Registrar gasto</h2>
+<h2>Nuevo Movimiento</h2>
 
-<input type="number" id="monto" placeholder="Monto $" />
+<form id="formMovimiento">
 
-<select id="categoria">
-
-<option value="">Seleccionar categoría</option>
-<option value="Carnicería">Carnicería</option>
-<option value="Verdulería">Verdulería</option>
-<option value="Supermercado">Supermercado</option>
-<option value="PedidosYa">PedidosYa</option>
-<option value="Transporte">Transporte</option>
-<option value="Otros">Otros</option>
-
+<select id="tipo">
+<option value="ingreso">Ingreso</option>
+<option value="gasto">Gasto</option>
 </select>
 
-<button id="guardar">Guardar gasto</button>
+<input type="number" id="monto" placeholder="Monto" required>
+
+<input type="date" id="fecha" required>
+
+<button type="submit">Guardar</button>
+
+</form>
 
 </section>
 
 
-<!-- ============================= -->
-<!-- RESUMEN DE GASTOS -->
-<!-- ============================= -->
+<!-- =====================================================
+LISTA DE MOVIMIENTOS
+===================================================== -->
 
-<section class="resumen">
+<section>
 
-<h2>Total del mes</h2>
+<h2>Movimientos</h2>
 
-<div id="total">$0</div>
-
-</section>
-
-
-<!-- ============================= -->
-<!-- LISTA DE GASTOS -->
-<!-- ============================= -->
-
-<section class="lista">
-
-<h2>Gastos registrados</h2>
-
-<ul id="lista-gastos"></ul>
+<ul id="listaMovimientos"></ul>
 
 </section>
 
 
-<!-- ============================= -->
-<!-- GRÁFICO -->
-<!-- ============================= -->
+<!-- =====================================================
+GRAFICOS
+===================================================== -->
 
-<section class="grafico">
+<section>
 
-<h2>Gastos por categoría</h2>
+<h2>Resumen</h2>
 
-<canvas id="graficoGastos"></canvas>
+<canvas id="graficoResumen"></canvas>
+
+</section>
+
+<section>
+
+<h2>Movimientos por Mes</h2>
+
+<canvas id="graficoMensual"></canvas>
 
 </section>
 
 
-<!-- ============================= -->
-<!-- LIBRERÍA DE GRÁFICOS -->
-<!-- ============================= -->
+<!-- =====================================================
+SCRIPTS
+===================================================== -->
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- SCRIPT PRINCIPAL -->
 <script src="app.js"></script>
+<script src="charts.js"></script>
 
 
-<!-- ============================= -->
-<!-- REGISTRO SERVICE WORKER -->
-<!-- ============================= -->
+<!-- =====================================================
+REGISTRO SERVICE WORKER
+===================================================== -->
 
 <script>
 
 if ('serviceWorker' in navigator) {
 
-window.addEventListener('load', () => {
-
-navigator.serviceWorker.register('./service-worker.js')
-.then(() => console.log("Service Worker registrado"));
-
-});
+navigator.serviceWorker.register('service-worker.js')
+.then(() => console.log("Service Worker registrado"))
 
 }
-
-</script>
-
-
-<!-- ============================= -->
-<!-- INSTALADOR PWA -->
-<!-- ============================= -->
-
-<script>
-
-let deferredPrompt;
-const botonInstalar = document.getElementById("instalarApp");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-
-e.preventDefault();
-
-deferredPrompt = e;
-
-botonInstalar.style.display = "inline-block";
-
-});
-
-botonInstalar.addEventListener("click", async () => {
-
-botonInstalar.style.display = "none";
-
-deferredPrompt.prompt();
-
-await deferredPrompt.userChoice;
-
-deferredPrompt = null;
-
-});
 
 </script>
 
