@@ -1,132 +1,57 @@
-/* RESET BASICO */
+body{
 
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: Arial, sans-serif;
+font-family: Arial;
+background:#f4f4f4;
+margin:0;
+padding:20px;
+
 }
 
+header{
 
-/* CUERPO */
+text-align:center;
+margin-bottom:20px;
 
-body {
-background: #f2f4f8;
-color: #333;
-padding: 20px;
 }
 
+section{
 
-/* ENCABEZADO */
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:8px;
 
-header {
-text-align: center;
-margin-bottom: 25px;
 }
 
-header h1 {
-color: #2c7be5;
-margin-bottom: 5px;
+form{
+
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+
 }
 
-header p {
-color: #666;
-font-size: 14px;
+button{
+
+background:#2c3e50;
+color:white;
+border:none;
+padding:10px;
+cursor:pointer;
+border-radius:5px;
+
 }
 
+ul{
 
-/* FORMULARIO */
+list-style:none;
+padding:0;
 
-.formulario {
-background: white;
-padding: 20px;
-border-radius: 10px;
-margin-bottom: 20px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.formulario h2 {
-margin-bottom: 10px;
-}
+li{
 
-.formulario input,
-.formulario select {
-width: 100%;
-padding: 12px;
-margin-top: 10px;
-border-radius: 8px;
-border: 1px solid #ccc;
-font-size: 16px;
-}
+padding:10px;
+border-bottom:1px solid #ddd;
 
-.formulario button {
-width: 100%;
-margin-top: 15px;
-padding: 12px;
-background: #2c7be5;
-color: white;
-border: none;
-border-radius: 8px;
-font-size: 16px;
-cursor: pointer;
-}
-
-.formulario button:hover {
-background: #1a68d1;
-}
-
-
-/* RESUMEN */
-
-.resumen {
-background: white;
-padding: 20px;
-border-radius: 10px;
-margin-bottom: 20px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-text-align: center;
-}
-
-#total {
-font-size: 28px;
-color: #2c7be5;
-margin-top: 10px;
-font-weight: bold;
-}
-
-
-/* LISTA */
-
-.lista {
-background: white;
-padding: 20px;
-border-radius: 10px;
-margin-bottom: 20px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-#lista-gastos {
-list-style: none;
-margin-top: 10px;
-}
-
-#lista-gastos li {
-padding: 10px;
-border-bottom: 1px solid #eee;
-display: flex;
-justify-content: space-between;
-}
-
-
-/* GRAFICO */
-
-.grafico {
-background: white;
-padding: 20px;
-border-radius: 10px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-canvas {
-margin-top: 15px;
 }
