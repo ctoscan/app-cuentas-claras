@@ -1,11 +1,7 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
-<head>
 
-<!-- ================================= -->
-<!-- CONFIGURACIÓN BÁSICA -->
-<!-- ================================= -->
+<head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,20 +10,13 @@
 
 <link rel="stylesheet" href="styles.css">
 
-<!-- ================================= -->
-<!-- CONFIGURACIÓN PWA -->
-<!-- ================================= -->
-
+<!-- PWA -->
 <link rel="manifest" href="manifest.json">
-
 <meta name="theme-color" content="#2c7be5">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<!-- ================================= -->
 <!-- ICONOS -->
-<!-- ================================= -->
-
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="shortcut icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -36,25 +25,15 @@
 
 <body>
 
-<!-- ================================= -->
-<!-- HEADER -->
-<!-- ================================= -->
-
 <header>
 <h1>💰 Cuentas Claras</h1>
 <p>Control simple de gastos diarios</p>
 
-<!-- BOTÓN INSTALAR APP -->
 <button id="instalarApp" style="display:none;">
 📲 Instalar App
 </button>
 
 </header>
-
-
-<!-- ================================= -->
-<!-- FORMULARIO DE GASTOS -->
-<!-- ================================= -->
 
 <section class="formulario">
 
@@ -78,11 +57,6 @@
 
 </section>
 
-
-<!-- ================================= -->
-<!-- TOTAL DEL MES -->
-<!-- ================================= -->
-
 <section class="resumen">
 
 <h2>Total del mes</h2>
@@ -90,11 +64,6 @@
 <div id="total">$0</div>
 
 </section>
-
-
-<!-- ================================= -->
-<!-- LISTA DE GASTOS -->
-<!-- ================================= -->
 
 <section class="lista">
 
@@ -104,11 +73,6 @@
 
 </section>
 
-
-<!-- ================================= -->
-<!-- GRÁFICO DE GASTOS -->
-<!-- ================================= -->
-
 <section class="grafico">
 
 <h2>Gastos por categoría</h2>
@@ -117,75 +81,53 @@
 
 </section>
 
-
-<!-- ================================= -->
-<!-- LIBRERÍA DE GRÁFICOS -->
-<!-- ================================= -->
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<!-- SCRIPT PRINCIPAL -->
 <script src="app.js"></script>
-
-
-<!-- ================================= -->
-<!-- REGISTRO SERVICE WORKER -->
-<!-- ================================= -->
 
 <script>
 
 if ('serviceWorker' in navigator) {
 
-  window.addEventListener('load', () => {
+window.addEventListener('load', () => {
 
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => console.log("Service Worker registrado:", reg))
-      .catch(err => console.log("Error SW:", err));
+navigator.serviceWorker.register('./service-worker.js')
+.then(reg => console.log("Service Worker registrado:", reg))
+.catch(err => console.log("Error SW:", err));
 
-  });
+});
 
 }
 
 </script>
 
-
-<!-- ================================= -->
-<!-- INSTALACIÓN DE LA APP -->
-<!-- ================================= -->
-
 <script>
 
 let deferredPrompt;
-
 const botonInstalar = document.getElementById("instalarApp");
 
 window.addEventListener("beforeinstallprompt", (e) => {
 
-  e.preventDefault();
-
-  deferredPrompt = e;
-
-  botonInstalar.style.display = "inline-block";
+e.preventDefault();
+deferredPrompt = e;
+botonInstalar.style.display = "inline-block";
 
 });
 
 botonInstalar.addEventListener("click", async () => {
 
-  botonInstalar.style.display = "none";
+botonInstalar.style.display = "none";
 
-  deferredPrompt.prompt();
+deferredPrompt.prompt();
 
-  const { outcome } = await deferredPrompt.userChoice;
+const { outcome } = await deferredPrompt.userChoice;
 
-  console.log("Resultado instalación:", outcome);
+console.log("Resultado instalación:", outcome);
 
-  deferredPrompt = null;
+deferredPrompt = null;
 
 });
 
 </script>
 
-
 </body>
 </html>
-```
