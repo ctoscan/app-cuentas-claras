@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -8,10 +9,14 @@
 
 <link rel="stylesheet" href="styles.css">
 
-<!-- Manifest PWA -->
+<!-- PWA -->
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icons/icon-192.png">
 <meta name="theme-color" content="#2c7be5">
+
+<!-- Iconos -->
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="shortcut icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 
 </head>
 
@@ -21,7 +26,6 @@
 <h1>💰 Cuentas Claras</h1>
 <p>Control simple de gastos diarios</p>
 </header>
-
 
 <section class="formulario">
 
@@ -45,7 +49,6 @@
 
 </section>
 
-
 <section class="resumen">
 
 <h2>Total del mes</h2>
@@ -54,17 +57,13 @@
 
 </section>
 
-
 <section class="lista">
 
 <h2>Gastos registrados</h2>
 
-<ul id="lista-gastos">
-
-</ul>
+<ul id="lista-gastos"></ul>
 
 </section>
-
 
 <section class="grafico">
 
@@ -79,14 +78,15 @@
 
 <script>
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-  .then(() => console.log("Service Worker registrado"));
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(reg => console.log("Service Worker registrado", reg))
+      .catch(err => console.log("Error SW:", err));
+  });
 }
 
 </script>
 
 </body>
-
 </html>
-
