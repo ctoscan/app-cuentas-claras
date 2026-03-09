@@ -1,132 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-<!-- =====================================================
-CONFIGURACIÓN GENERAL
-===================================================== -->
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cuentas Claras</title>
-
-<!-- =====================================================
-PWA CONFIG
-Permite instalar la app
-===================================================== -->
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#2c3e50">
-
-<!-- =====================================================
-ESTILOS
-===================================================== -->
+<title>APP Cuentas Claras</title>
 
 <link rel="stylesheet" href="styles.css">
 
-<!-- =====================================================
-CHART.JS
-===================================================== -->
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Manifest PWA -->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="theme-color" content="#2c7be5">
 
 </head>
 
 <body>
 
-
-<!-- =====================================================
-HEADER
-===================================================== -->
-
 <header>
-
-<h1>Cuentas Claras</h1>
-
+<h1>💰 Cuentas Claras</h1>
+<p>Control simple de gastos diarios</p>
 </header>
 
 
-<!-- =====================================================
-FORMULARIO DE MOVIMIENTOS
-===================================================== -->
-
 <section class="formulario">
 
-<h2>Nuevo Movimiento</h2>
+<h2>Registrar gasto</h2>
 
-<form id="formMovimiento">
+<input type="number" id="monto" placeholder="Monto $" />
 
-<select id="tipo">
-<option value="ingreso">Ingreso</option>
-<option value="gasto">Gasto</option>
+<select id="categoria">
+
+<option value="">Seleccionar categoría</option>
+<option value="Carnicería">Carnicería</option>
+<option value="Verdulería">Verdulería</option>
+<option value="Supermercado">Supermercado</option>
+<option value="PedidosYa">PedidosYa</option>
+<option value="Transporte">Transporte</option>
+<option value="Otros">Otros</option>
+
 </select>
 
-<input type="number" id="monto" placeholder="Monto" required>
-
-<input type="date" id="fecha" required>
-
-<button type="submit">Guardar</button>
-
-</form>
+<button id="guardar">Guardar gasto</button>
 
 </section>
 
 
-<!-- =====================================================
-LISTA DE MOVIMIENTOS
-===================================================== -->
+<section class="resumen">
 
-<section>
+<h2>Total del mes</h2>
 
-<h2>Movimientos</h2>
-
-<ul id="listaMovimientos"></ul>
+<div id="total">$0</div>
 
 </section>
 
 
-<!-- =====================================================
-GRAFICOS
-===================================================== -->
+<section class="lista">
 
-<section>
+<h2>Gastos registrados</h2>
 
-<h2>Resumen</h2>
+<ul id="lista-gastos">
 
-<canvas id="graficoResumen"></canvas>
-
-</section>
-
-<section>
-
-<h2>Movimientos por Mes</h2>
-
-<canvas id="graficoMensual"></canvas>
+</ul>
 
 </section>
 
 
-<!-- =====================================================
-SCRIPTS
-===================================================== -->
+<section class="grafico">
 
+<h2>Gastos por categoría</h2>
+
+<canvas id="graficoGastos"></canvas>
+
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="app.js"></script>
-<script src="charts.js"></script>
-
-
-<!-- =====================================================
-REGISTRO SERVICE WORKER
-===================================================== -->
 
 <script>
 
-if ('serviceWorker' in navigator) {
-
-navigator.serviceWorker.register('service-worker.js')
-.then(() => console.log("Service Worker registrado"))
-
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+  .then(() => console.log("Service Worker registrado"));
 }
 
 </script>
