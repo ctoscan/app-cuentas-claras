@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 
 <meta charset="UTF-8">
@@ -13,12 +12,9 @@
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2c7be5">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
 
-<!-- ICONOS -->
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="shortcut icon" href="icons/icon-192.png">
+<!-- Iconos -->
+<link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 
 </head>
@@ -28,11 +24,6 @@
 <header>
 <h1>💰 Cuentas Claras</h1>
 <p>Control simple de gastos diarios</p>
-
-<button id="instalarApp" style="display:none;">
-📲 Instalar App
-</button>
-
 </header>
 
 <section class="formulario">
@@ -85,48 +76,9 @@
 <script src="app.js"></script>
 
 <script>
-
 if ('serviceWorker' in navigator) {
-
-window.addEventListener('load', () => {
-
-navigator.serviceWorker.register('./service-worker.js')
-.then(reg => console.log("Service Worker registrado:", reg))
-.catch(err => console.log("Error SW:", err));
-
-});
-
+  navigator.serviceWorker.register('service-worker.js');
 }
-
-</script>
-
-<script>
-
-let deferredPrompt;
-const botonInstalar = document.getElementById("instalarApp");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-
-e.preventDefault();
-deferredPrompt = e;
-botonInstalar.style.display = "inline-block";
-
-});
-
-botonInstalar.addEventListener("click", async () => {
-
-botonInstalar.style.display = "none";
-
-deferredPrompt.prompt();
-
-const { outcome } = await deferredPrompt.userChoice;
-
-console.log("Resultado instalación:", outcome);
-
-deferredPrompt = null;
-
-});
-
 </script>
 
 </body>
