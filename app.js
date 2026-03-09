@@ -1,122 +1,158 @@
-/* =====================================================
-APP PRINCIPAL
-Gestiona ingresos y gastos
-===================================================== */
+// ================================
+// APP CUENTAS CLARAS
+// ================================
 
 
-/* =====================================================
-LOCAL STORAGE
-===================================================== */
+// ELEMENTOS DEL HTML
 
-function obtenerMovimientos(){
+const montoInput = document.getElementById("monto");
+const categoriaSelect = document.getElementById("categoria");
+const botonGuardar = document.getElementById("guardar");
 
-const data = localStorage.getItem("movimientos")
+const listaGastos = document.getElementById("lista-gastos");
+const totalElemento = document.getElementById("total");
 
-if(!data) return []
 
-return JSON.parse(data)
+// ================================
+// CARGAR GASTOS GUARDADOS
+// ================================
+
+let gastos = JSON.parse(localStorage.getItem("gastos")) || [];
+
+
+// ================================
+// GUARDAR GASTO
+// ================================
+
+botonGuardar.addEventListener("click", () => {
+
+const monto = parseFloat(montoInput.value);
+const categoria = categoriaSelect.value;
+
+if (!monto || !categoria) {
+
+alert("Completa monto y categoría");
+return;
+
+}
+
+const gasto = {
+
+fecha: new Date().toLocaleDateString(),
+categoria: categoria,
+monto: monto
+
+};
+
+gastos.push(gasto);
+
+localStorage.setItem("gastos", JSON.stringify(gastos));
+
+montoInput.value = "";
+categoriaSelect.value = "";
+
+mostrarGastos();
+calcularTotal();
+actualizarGrafico();
+
+});
+
+
+// ================================
+// MOSTRAR GASTOS
+// ================================
+
+function mostrarGastos() {
+
+listaGastos.innerHTML = "";
+
+gastos.forEach(gasto => {
+
+const li = document.createElement("li");
+
+li.innerHTML = `
+<span>${gasto.categoria}</span>
+<span>$${gasto.monto}</span>
+`;
+
+listaGastos.appendChild(li);
+
+});
 
 }
 
 
-function guardarMovimientos(movimientos){
+// ================================
+// CALCULAR TOTAL
+// ================================
 
-localStorage.setItem("movimientos", JSON.stringify(movimientos))
+function calcularTotal() {
 
-}
+let total = 0;
 
+gastos.forEach(gasto => {
 
-/* =====================================================
-AGREGAR MOVIMIENTO
-===================================================== */
+total += gasto.monto;
 
-function agregarMovimiento(tipo,monto,fecha){
+});
 
-const movimientos = obtenerMovimientos()
-
-movimientos.push({
-
-tipo,
-monto,
-fecha
-
-})
-
-guardarMovimientos(movimientos)
-
-mostrarMovimientos()
-
-location.reload()
+totalElemento.textContent = "$" + total;
 
 }
 
 
-/* =====================================================
-MOSTRAR MOVIMIENTOS
-===================================================== */
+// ================================
+// GRAFICO DE GASTOS
+// ================================
 
-function mostrarMovimientos(){
+let grafico;
 
-const lista = document.getElementById("listaMovimientos")
+function actualizarGrafico() {
 
-lista.innerHTML=""
+const categorias = {};
 
-const movimientos = obtenerMovimientos()
+gastos.forEach(gasto => {
 
-movimientos.forEach((mov,i)=>{
+if (!categorias[gasto.categoria]) {
+categorias[gasto.categoria] = 0;
+}
 
-const li = document.createElement("li")
+categorias[gasto.categoria] += gasto.monto;
 
-li.innerHTML=`
-${mov.tipo} - $${mov.monto} - ${mov.fecha}
-<button onclick="eliminarMovimiento(${i})">Eliminar</button>
-`
+});
 
-lista.appendChild(li)
+const labels = Object.keys(categorias);
+const data = Object.values(categorias);
 
-})
+const ctx = document.getElementById("graficoGastos");
+
+if (grafico) {
+grafico.destroy();
+}
+
+grafico = new Chart(ctx, {
+
+type: "pie",
+
+data: {
+
+labels: labels,
+
+datasets: [{
+data: data
+}]
+
+}
+
+});
 
 }
 
 
-/* =====================================================
-ELIMINAR MOVIMIENTO
-===================================================== */
+// ================================
+// INICIAR APP
+// ================================
 
-function eliminarMovimiento(index){
-
-const movimientos = obtenerMovimientos()
-
-movimientos.splice(index,1)
-
-guardarMovimientos(movimientos)
-
-mostrarMovimientos()
-
-location.reload()
-
-}
-
-
-/* =====================================================
-FORMULARIO
-===================================================== */
-
-document.getElementById("formMovimiento").addEventListener("submit",function(e){
-
-e.preventDefault()
-
-const tipo = document.getElementById("tipo").value
-const monto = document.getElementById("monto").value
-const fecha = document.getElementById("fecha").value
-
-agregarMovimiento(tipo,monto,fecha)
-
-})
-
-
-/* =====================================================
-INICIALIZAR APP
-===================================================== */
-
-document.addEventListener("DOMContentLoaded",mostrarMovimientos)
+mostrarGastos();
+calcularTotal();
+actualizarGrafico();
