@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
+<!-- ============================= -->
+<!-- CONFIGURACIÓN GENERAL -->
+<!-- ============================= -->
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +14,10 @@
 
 <link rel="stylesheet" href="styles.css">
 
-<!-- PWA -->
+<!-- ============================= -->
+<!-- CONFIGURACIÓN PWA -->
+<!-- ============================= -->
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2c7be5">
 
@@ -19,12 +27,29 @@
 
 </head>
 
+
 <body>
 
+<!-- ============================= -->
+<!-- HEADER -->
+<!-- ============================= -->
+
 <header>
+
 <h1>💰 Cuentas Claras</h1>
 <p>Control simple de gastos diarios</p>
+
+<!-- BOTÓN INSTALAR APP -->
+<button id="instalarApp" style="display:none;">
+📲 Instalar App
+</button>
+
 </header>
+
+
+<!-- ============================= -->
+<!-- FORMULARIO DE REGISTRO -->
+<!-- ============================= -->
 
 <section class="formulario">
 
@@ -48,6 +73,11 @@
 
 </section>
 
+
+<!-- ============================= -->
+<!-- RESUMEN DE GASTOS -->
+<!-- ============================= -->
+
 <section class="resumen">
 
 <h2>Total del mes</h2>
@@ -55,6 +85,11 @@
 <div id="total">$0</div>
 
 </section>
+
+
+<!-- ============================= -->
+<!-- LISTA DE GASTOS -->
+<!-- ============================= -->
 
 <section class="lista">
 
@@ -64,6 +99,11 @@
 
 </section>
 
+
+<!-- ============================= -->
+<!-- GRÁFICO -->
+<!-- ============================= -->
+
 <section class="grafico">
 
 <h2>Gastos por categoría</h2>
@@ -72,13 +112,68 @@
 
 </section>
 
+
+<!-- ============================= -->
+<!-- LIBRERÍA DE GRÁFICOS -->
+<!-- ============================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- SCRIPT PRINCIPAL -->
 <script src="app.js"></script>
 
+
+<!-- ============================= -->
+<!-- REGISTRO SERVICE WORKER -->
+<!-- ============================= -->
+
 <script>
+
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
+
+window.addEventListener('load', () => {
+
+navigator.serviceWorker.register('./service-worker.js')
+.then(() => console.log("Service Worker registrado"));
+
+});
+
 }
+
+</script>
+
+
+<!-- ============================= -->
+<!-- INSTALADOR PWA -->
+<!-- ============================= -->
+
+<script>
+
+let deferredPrompt;
+const botonInstalar = document.getElementById("instalarApp");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+
+e.preventDefault();
+
+deferredPrompt = e;
+
+botonInstalar.style.display = "inline-block";
+
+});
+
+botonInstalar.addEventListener("click", async () => {
+
+botonInstalar.style.display = "none";
+
+deferredPrompt.prompt();
+
+await deferredPrompt.userChoice;
+
+deferredPrompt = null;
+
+});
+
 </script>
 
 </body>
