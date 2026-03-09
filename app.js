@@ -1,150 +1,122 @@
-// =============================
-// CARGAR GASTOS DESDE STORAGE
-// =============================
-
-let gastos = JSON.parse(localStorage.getItem("gastos")) || [];
-
-
-// =============================
-// ELEMENTOS DEL DOM
-// =============================
-
-const montoInput = document.getElementById("monto");
-const categoriaInput = document.getElementById("categoria");
-const botonGuardar = document.getElementById("guardar");
-
-const lista = document.getElementById("lista-gastos");
-const totalElemento = document.getElementById("total");
+/* =====================================================
+APP PRINCIPAL
+Gestiona ingresos y gastos
+===================================================== */
 
 
-// =============================
-// EVENTO GUARDAR GASTO
-// =============================
+/* =====================================================
+LOCAL STORAGE
+===================================================== */
 
-botonGuardar.addEventListener("click", agregarGasto);
+function obtenerMovimientos(){
 
+const data = localStorage.getItem("movimientos")
 
-function agregarGasto(){
+if(!data) return []
 
-const monto = parseFloat(montoInput.value);
-const categoria = categoriaInput.value;
-
-if(!monto || !categoria){
-
-alert("Completar monto y categoría");
-return;
+return JSON.parse(data)
 
 }
 
-const gasto = {
 
+function guardarMovimientos(movimientos){
+
+localStorage.setItem("movimientos", JSON.stringify(movimientos))
+
+}
+
+
+/* =====================================================
+AGREGAR MOVIMIENTO
+===================================================== */
+
+function agregarMovimiento(tipo,monto,fecha){
+
+const movimientos = obtenerMovimientos()
+
+movimientos.push({
+
+tipo,
 monto,
-categoria
+fecha
 
-};
+})
 
-gastos.push(gasto);
+guardarMovimientos(movimientos)
 
-guardarDatos();
-actualizarUI();
+mostrarMovimientos()
 
-montoInput.value="";
-categoriaInput.value="";
+location.reload()
 
 }
 
 
-// =============================
-// GUARDAR EN LOCAL STORAGE
-// =============================
+/* =====================================================
+MOSTRAR MOVIMIENTOS
+===================================================== */
 
-function guardarDatos(){
+function mostrarMovimientos(){
 
-localStorage.setItem("gastos", JSON.stringify(gastos));
+const lista = document.getElementById("listaMovimientos")
 
-}
+lista.innerHTML=""
 
+const movimientos = obtenerMovimientos()
 
-// =============================
-// ACTUALIZAR INTERFAZ
-// =============================
+movimientos.forEach((mov,i)=>{
 
-function actualizarUI(){
+const li = document.createElement("li")
 
-lista.innerHTML="";
+li.innerHTML=`
+${mov.tipo} - $${mov.monto} - ${mov.fecha}
+<button onclick="eliminarMovimiento(${i})">Eliminar</button>
+`
 
-let total = 0;
+lista.appendChild(li)
 
-gastos.forEach(gasto => {
-
-total += gasto.monto;
-
-const li = document.createElement("li");
-
-li.textContent = `${gasto.categoria} - $${gasto.monto}`;
-
-lista.appendChild(li);
-
-});
-
-totalElemento.textContent = "$" + total;
-
-actualizarGrafico();
+})
 
 }
 
 
-// =============================
-// GRÁFICO
-// =============================
+/* =====================================================
+ELIMINAR MOVIMIENTO
+===================================================== */
 
-let grafico;
+function eliminarMovimiento(index){
 
-function actualizarGrafico(){
+const movimientos = obtenerMovimientos()
 
-const categorias = {};
+movimientos.splice(index,1)
 
-gastos.forEach(g => {
+guardarMovimientos(movimientos)
 
-if(!categorias[g.categoria]){
+mostrarMovimientos()
 
-categorias[g.categoria]=0;
-
-}
-
-categorias[g.categoria]+=g.monto;
-
-});
-
-const labels = Object.keys(categorias);
-const data = Object.values(categorias);
-
-const ctx = document.getElementById("graficoGastos");
-
-if(grafico){
-
-grafico.destroy();
-
-}
-
-grafico = new Chart(ctx,{
-
-type:'pie',
-
-data:{
-labels:labels,
-datasets:[{
-data:data
-}]
-}
-
-});
+location.reload()
 
 }
 
 
-// =============================
-// INICIALIZAR UI
-// =============================
+/* =====================================================
+FORMULARIO
+===================================================== */
 
-actualizarUI();
+document.getElementById("formMovimiento").addEventListener("submit",function(e){
+
+e.preventDefault()
+
+const tipo = document.getElementById("tipo").value
+const monto = document.getElementById("monto").value
+const fecha = document.getElementById("fecha").value
+
+agregarMovimiento(tipo,monto,fecha)
+
+})
+
+
+/* =====================================================
+INICIALIZAR APP
+===================================================== */
+
+document.addEventListener("DOMContentLoaded",mostrarMovimientos)
