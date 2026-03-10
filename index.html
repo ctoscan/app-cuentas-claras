@@ -76,6 +76,47 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="app.js"></script>
+  
+<!-- =========================================
+REGISTRO DEL SERVICE WORKER
+Permite que la app funcione como PWA
+========================================= -->
+<script>
+
+if ('serviceWorker' in navigator) {
+
+  window.addEventListener('load', () => {
+
+    navigator.serviceWorker.register('service-worker.js')
+    .then(reg => console.log("Service Worker registrado", reg))
+    .catch(err => console.log("Error registrando Service Worker", err));
+
+  });
+
+}
+
+</script>
+
+
+<!-- =========================================
+DETECCION DE INSTALACION PWA
+Permite mostrar la opcion de instalar app
+========================================= -->
+<script>
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+
+  console.log("Instalación PWA disponible");
+
+  e.preventDefault();
+
+  deferredPrompt = e;
+
+});
+
+</script>
 
 <script>
 
@@ -87,4 +128,5 @@ if ("serviceWorker" in navigator) {
 </script>
 
 </body>
+
 </html>
