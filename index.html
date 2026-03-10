@@ -21,7 +21,19 @@
 <h1>💰 Cuentas Claras</h1>
 <p>Control simple de gastos diarios</p>
 </header>
+  
+<!-- =========================================
+BOTON INSTALAR APP
+Permite instalar la PWA manualmente
+========================================= -->
 
+<section class="instalar-app">
+
+<button id="instalarApp" style="display:none;">
+📲 Instalar Cuentas Claras
+</button>
+
+</section>
 
 <section class="formulario">
 
@@ -96,7 +108,45 @@ if ('serviceWorker' in navigator) {
 }
 
 </script>
+  
+<!-- =========================================
+EVENTO INSTALACION PWA
+Captura el evento beforeinstallprompt
+========================================= -->
 
+<script>
+
+let deferredPrompt;
+
+const botonInstalar = document.getElementById("instalarApp");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+
+    e.preventDefault();
+
+    deferredPrompt = e;
+
+    botonInstalar.style.display = "block";
+
+});
+
+botonInstalar.addEventListener("click", async () => {
+
+    botonInstalar.style.display = "none";
+
+    deferredPrompt.prompt();
+
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === "accepted") {
+        console.log("Usuario aceptó instalar la app");
+    }
+
+    deferredPrompt = null;
+
+});
+
+</script>
 
 <!-- =========================================
 DETECCION DE INSTALACION PWA
@@ -130,3 +180,4 @@ if ("serviceWorker" in navigator) {
 </body>
 
 </html>
+
