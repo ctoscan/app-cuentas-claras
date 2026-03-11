@@ -106,17 +106,12 @@ box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 #lista-gastos {
-list-style: none;
-margin-top: 10px;
-}
 
-#lista-gastos li {
-padding: 10px;
-border-bottom: 1px solid #eee;
-display: flex;
-justify-content: space-between;
-}
+max-height: 300px;
+overflow-y: auto;
+margin-top: 15px; /* separa del titulo */
 
+}
 
 /* GRAFICO */
 
@@ -129,4 +124,198 @@ box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 
 canvas {
 margin-top: 15px;
+}
+
+/* =========================================
+   BOTON INSTALAR APP
+========================================= */
+
+.instalar-app{
+
+display: flex;
+justify-content: flex-end;
+margin-bottom: 20px;
+
+}
+
+/* =====================================
+ITEM DE GASTO
+===================================== */
+
+#lista-gastos li {
+
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+padding: 8px 10px;
+border-bottom: 1px solid #ddd;
+
+}
+
+/* fecha */
+
+#lista-gastos li span:first-child {
+
+width:80px;
+text-align:left;
+
+}
+
+/* categoria */
+
+#lista-gastos li span:nth-child(2){
+
+flex:1;
+text-align:left;
+
+}
+
+/* monto */
+
+#lista-gastos li span:nth-child(3){
+
+width:90px;
+text-align:right;
+font-weight:bold;
+
+}
+
+/* boton eliminar */
+
+.eliminar {
+
+background: none;
+border: none;
+cursor: pointer;
+
+color: #888;
+font-size: 16px;
+
+margin-left: 12px;   /* espacio respecto al monto */
+
+transition: 0.2s;
+
+}
+
+.eliminar:hover {
+
+color: #e53935;
+transform: scale(1.2);
+
+}
+
+/* LOGO TITULO APP */
+
+.logo-app{
+
+width:32px;
+height:32px;
+
+vertical-align:middle;
+margin-right:8px;
+
+}
+
+/* CONTENEDOR BOTONES */
+
+.acciones{
+display:flex;
+gap:8px;
+margin-left:12px;  /* separa los botones del monto */
+}
+
+/* BOTON EDITAR */
+
+.editar{
+
+background:none;
+border:none;
+cursor:pointer;
+
+color:#666;
+font-size:14px;
+
+transition:0.2s;
+
+}
+
+.editar:hover{
+
+color:#1976d2;
+transform:scale(1.2);
+
+}
+
+/* =========================================
+BOTON EXPORTAR
+========================================= */
+
+.exportar{
+
+text-align:center;
+margin-top:25px;
+margin-bottom:20px;
+
+}
+
+#exportarExcel{
+
+background:#2e7d32;
+color:white;
+
+border:none;
+padding:10px 18px;
+
+border-radius:6px;
+
+cursor:pointer;
+
+font-size:14px;
+
+transition:0.2s;
+
+}
+
+#exportarExcel:hover{
+
+background:#1b5e20;
+
+}
+
+/* =========================================
+BARRA SUPERIOR FECHA Y HORA
+========================================= */
+
+.barra-superior{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:15px;
+padding-bottom:8px;
+
+font-family:'Inter',sans-serif;
+
+}
+
+/* hora */
+
+#hora-actual{
+
+color:#2c7be5;
+font-weight:600;
+font-size:16px;
+
+}
+
+/* fecha */
+
+#fecha-actual{
+
+color:#2c7be5;
+font-weight:500;
+font-size:14px;
+
 }

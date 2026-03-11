@@ -7,6 +7,8 @@
 <title>APP Cuentas Claras</title>
 
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <!-- Manifest PWA -->
 <link rel="manifest" href="manifest.json">
@@ -17,8 +19,16 @@
 
 <body>
 
+<div class="barra-superior">
+    <span id="hora-actual"></span>
+    <span id="fecha-actual"></span>
+</div>
+
 <header>
-<h1>💰 Cuentas Claras</h1>
+<h1>
+<img src="icons/icon-192.png" class="logo-app">
+Cuentas Claras
+</h1>
 <p>Control simple de gastos diarios</p>
 </header>
   
@@ -44,11 +54,18 @@ Permite instalar la PWA manualmente
 <select id="categoria">
 
 <option value="">Seleccionar categoría</option>
-<option value="Carnicería">Carnicería</option>
-<option value="Verdulería">Verdulería</option>
+<option value="Carniceria">Carniceria</option>
+<option value="Verduleria">Verduleria</option>
+<option value="Polleria">Polleria</option>
 <option value="Supermercado">Supermercado</option>
-<option value="PedidosYa">PedidosYa</option>
 <option value="Transporte">Transporte</option>
+<option value="PedidosYa">PedidosYa</option>
+<option value="Servicios">Servicios</option>
+<option value="Entretenimiento">Entretenimiento</option>
+<option value="Farmacia">Farmacia</option>
+<option value="Veterinaria">Veterinaria</option>
+<option value="Heladeria">Heladeria</option>
+<option value="Uber">Uber</option>
 <option value="Otros">Otros</option>
 
 </select>
@@ -86,7 +103,21 @@ Permite instalar la PWA manualmente
 
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- =========================================
+EXPORTAR A EXCEL
+========================================= -->
+
+<section class="exportar">
+
+<button id="exportarExcel">
+Exportar gastos a Excel
+</button>
+
+</section>
+
+<!--* Chart.js v4.x - descargado desde CDN *-->
+
+<script src="libs/chart.js"></script>
 <script src="app.js"></script>
   
 <!-- =========================================
@@ -154,8 +185,6 @@ Permite mostrar la opcion de instalar app
 ========================================= -->
 <script>
 
-let deferredPrompt;
-
 window.addEventListener('beforeinstallprompt', (e) => {
 
   console.log("Instalación PWA disponible");
@@ -165,15 +194,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
 
 });
-
-</script>
-
-<script>
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-  .then(() => console.log("Service Worker registrado"));
-}
 
 </script>
 
