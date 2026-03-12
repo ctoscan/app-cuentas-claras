@@ -241,13 +241,25 @@ e.preventDefault();
 
 deferredPrompt = e;
 
-botonInstalar.style.display = "block";
-
 });
 
 botonInstalar.addEventListener("click", async () => {
 
-if (!deferredPrompt) return;
+if (window.matchMedia('(display-mode: standalone)').matches) {
+
+alert("La app ya está instalada en este dispositivo.");
+
+return;
+
+}
+
+if (!deferredPrompt) {
+
+alert("Este navegador no permite instalar la aplicación en este momento.");
+
+return;
+
+}
 
 deferredPrompt.prompt();
 
@@ -343,3 +355,4 @@ setInterval(actualizarFechaHora,1000);
 
 // ejecutar al cargar
 actualizarFechaHora();
+
