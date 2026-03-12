@@ -241,18 +241,14 @@ e.preventDefault();
 
 deferredPrompt = e;
 
+botonInstalar.style.display = "block";
+
 });
 
 botonInstalar.addEventListener("click", async () => {
 
-if (!deferredPrompt)
+if (!deferredPrompt) return;
 
-alert("La instalación no está disponible en este navegador.");
-
-return;
-
-}
-  
 deferredPrompt.prompt();
 
 const { outcome } = await deferredPrompt.userChoice;
@@ -264,6 +260,8 @@ console.log("App instalada");
 }
 
 deferredPrompt = null;
+
+botonInstalar.style.display = "none";
 
 });
 
@@ -344,5 +342,4 @@ document.getElementById("fecha-actual").textContent = fecha;
 setInterval(actualizarFechaHora,1000);
 
 // ejecutar al cargar
-
 actualizarFechaHora();
