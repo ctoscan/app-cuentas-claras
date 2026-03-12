@@ -319,3 +319,17 @@ font-weight:500;
 font-size:14px;
 
 }
+
+/* =========================================
+OCULTAR FECHA EN PANTALLAS PEQUEÑAS
+========================================= */
+
+@media (max-width: 600px){
+
+#lista-gastos li span:first-child{
+
+display:none;
+
+}
+
+}
