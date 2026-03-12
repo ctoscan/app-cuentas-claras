@@ -1,7 +1,7 @@
 {
   "name": "APP Cuentas Claras",
   "short_name": "Cuentas Claras",
-  "description": "Control simple de gastos diarios"
+  "description": "Control simple de gastos diarios",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f2f4f8",
@@ -19,4 +19,5 @@
       "type": "image/png"
     }
   ]
+
 }
