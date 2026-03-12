@@ -49,7 +49,7 @@ Permite instalar la PWA manualmente
 
 <h2>Registrar gasto</h2>
 
-<input type="number" id="monto" placeholder="Monto $" />
+<input type="number" id="monto" placeholder="Monto $" min="0" max="9999999" step="1"/>
 
 <select id="categoria">
 
@@ -200,5 +200,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 </body>
 
 </html>
+
 
 
